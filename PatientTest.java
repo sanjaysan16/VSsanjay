@@ -1,200 +1,130 @@
 package edu.disease.asn2;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 
 import edu.disease.asn1.Exposure;
+import edu.disease.asn1.Patient;
 
-@TestMethodOrder(OrderAnnotation.class)
- class Patient2Test {
-
-	static Patient patient = new Patient(2,2);
-	static private Exposure[] exposures;
-	static private UUID[] diseaseIds;
-	static UUID patientId = UUID.randomUUID();
-	@Order(1)
+public class PatientTest {
+	// Patient p1 = new Patient();
+	UUID[] diseaseid;
+	Exposure[] exposures;
+	Patient patient;
 	@Test
-	void testHashCode() {
-		assertNotNull(patient.hashCode());
-	}
-	@Order(2)
-	@Test
-	void testPatient() {
-		assertThrows(IllegalArgumentException.class, ()->new Patient(-1,-1));
-	}
-	@Order(3)
-	@Test
-	void testAddDiseaseId() {
-		patient.addDiseaseId(UUID.randomUUID());
-		patient.addDiseaseId(UUID.randomUUID());
-	}
-	@Order(4)
-	@Test
-	void testAddDiseaseId1() {
-		assertThrows(IndexOutOfBoundsException.class, ()-> patient.addDiseaseId(UUID.randomUUID()));
-	}
-	@Order(5)
-	@Test
-	void testAddExposure() {
-		patient.addExposure(new Exposure(UUID.randomUUID()));
-		patient.addExposure(new Exposure(UUID.randomUUID()));
+	void atest() {
+		Patient p = new Patient(2, 2);
 	}
 
-	@Order(6)
 	@Test
-	void testAddExposure1() {
-		assertThrows(IndexOutOfBoundsException.class, () -> patient.addExposure(new Exposure(UUID.randomUUID())));
+	void throwstest1() {
+
+		assertThrows(IllegalArgumentException.class, () -> new Patient(2, -1));
+
 	}
-	@Order(7)
+
 	@Test
-	void testSetFirstName() {
-		patient.setFirstName("GURUNATHAN");
+	void btest() {
+		Patient p = new Patient(2, 2);
+		p.addDiseaseId(UUID.randomUUID());
+		p.addDiseaseId(UUID.randomUUID());
+		UUID[] p1 = p.getDiseaseIds();
+		assertTrue(p1[0] instanceof UUID && p1[0] instanceof UUID);
 	}
-	@Order(8)
+
 	@Test
-	void testGetFirstName() {
-		assertEquals("SANJAY", patient.getFirstName());
+	void throwtest1() {
+		Patient p = new Patient(1, 1);
+		p.addDiseaseId(UUID.randomUUID());
+		assertThrows(IndexOutOfBoundsException.class, () -> p.addDiseaseId(UUID.randomUUID()));
 	}
-	@Order(9)
 	@Test
-	void testSetLastName() {
-		patient.setLastName("BENIN");
+	void ctest() {
+		Patient p = new Patient(1, 1);
+       p.addExposure(new Exposure(null));
+		assertThrows(IndexOutOfBoundsException.class, () -> p.addExposure(new Exposure(null)));
+
 	}
-	@Order(10)
 	@Test
-	void testGetLastName() {
-		assertEquals("PREMKUMAR", patient.getLastName());
+	void etest() {
+		Patient p = new Patient(1, 1);
+		String name="Sanjay";
+       p.setFirstName(name);
+       
+       assertEquals(name, p.getFirstName());
 	}
-	@Order(11)
 	@Test
-	void testSetPatientId() {
-		patient.setPatientId1(UUID.randomUUID());
+	void htest() {
+		Patient p = new Patient(1, 1);
+    String name="v";
+    p.setLastName(name);
+    assertEquals(name, p.getLastName());
 	}
-	@Order(12)
 	@Test
-	void testGetPatientId() {
+	void ftest() {
+		Patient p = new Patient(1, 1);
+     
+     p.setDiseaseIds(diseaseid);
+     assertEquals(diseaseid, p.getDiseaseIds());
+	}
+	@Test
+	void gtest() {
+		Patient p = new Patient(1, 1);
+       p.setExposures(exposures);
+       assertEquals(exposures,p.getExposures());
+       
+	}
+	@Test
+	void itest() {
+		Patient p = new Patient(1, 1);
+		Patient p1 = new Patient(2, 1);
+		assertEquals(p.hashCode(), p1.hashCode());
+
+	}
+	@Test
+	void equaltest1() {
+		Patient p = new Patient(1, 1);
+		assertTrue(p.equals(p));
 		
-		patient.setPatientId(patientId);
-		assertEquals(patientId, (patient).getPatientId());
 	}
-	@Order(13)
 	@Test
-	void testSetExposures() {
-		patient.setExposures(exposures);
+	void equaltest2()
+	{
+		Patient p = new Patient(1, 1);
+		Patient p1 = null;
+    assertFalse(p.equals(p1));
+		
 	}
-	@Order(14)
 	@Test
-	void testGetExposures() {
-		assertArrayEquals(exposures, patient.getExposures());
+	void equalstest3() {
+		Patient p = new Patient(1, 1);
+		Exposure e=new Exposure(UUID.randomUUID());
+		assertFalse(p.equals(e));
 	}
-	@Order(15)
 	@Test
-	void testSetDiseaseIds() {
-		patient.setDiseaseIds(diseaseIds);
+	void equalstest4() {
+		Patient p = new Patient(1, 1);
+		assertTrue(p.equals(p));
+		
 	}
-	@Order(16)
 	@Test
-	void testGetDiseaseIds() {
-		assertArrayEquals(diseaseIds, patient.getDiseaseIds());
-	}
-	@Order(17)
-	@Test
-	void testEqualsObject() {
-		assertTrue(patient.equals(patient));
-	}
-	
-	@Order(18)
-	@Test
-	void testEqualsObject1() {
-		assertFalse(patient.equals(null));
-	}
-	
-	@Order(19)
-	@Test
-	void testEqualsObject2() {
-		assertFalse(patient.equals(new String()));
-	}
-	
-	@Order(20)
-	@Test
-	void testEqualsObject3() {
-		Patient patient = new Patient(2,2);
-		Patient patient1 = new Patient(2,2);
-		patient1.setPatientId(UUID.randomUUID());
-		assertFalse(patient.equals(patient1));
-	}
-	@Order(21)
-	@Test
-	void testEqualsObject4() {
-		UUID rdm = UUID.randomUUID();
-		Patient patient = new Patient(2,2);
-		Patient patient1 = new Patient(2,2);
-		patient.setPatientId(rdm);
-		patient1.setPatientId(rdm);
-		assertTrue(patient.equals(patient1));
-	}
-	
-	@Order(22)
-	@Test
-	void testEqualsObject5() throws InterruptedException {
-		Patient patient = new Patient(2,2);
-		Patient patient1 = new Patient(2,2);
-		patient.setPatientId(UUID.randomUUID());
-		patient1.setPatientId(UUID.randomUUID());
-		assertFalse(patient.equals(patient1));
-	}
-	
-	
-	@Order(23)
-	@Test
-	void testEqualsObject6() {
-		Exposure e1 = new Exposure(null);
-		Exposure e2 = new Exposure(UUID.randomUUID());
-		assertFalse(e1.equals(e2));
-	}
-	@Order(24)
-	@Test
-	void testEqualsObject7() {
-		LocalDateTime ldt = LocalDateTime.now();
-		UUID rdm = UUID.randomUUID();
-		Exposure e1 = new Exposure(rdm);
-		Exposure e2 = new Exposure(rdm);
-		e1.setDateTime(ldt);
-		e2.setDateTime(ldt);
-		assertTrue(e1.equals(e2));
-	}
-    @Order(25)
-    @Test
-    void testCompareTo() {
-    	Patient p = new Patient(2, 2);
-    	p.setLastName("SAVITHA");
-    	p.setFirstName("SWATHI");
-    	int res = patient.compareTo(p);
-    	assertEquals(res, res);
-    }
-    @Order(26)
+	void tostring() {
+		Patient p = new Patient(1, 1);
+       assertNotNull(p.toString());
     
-    @Test
-    void testCompareTo1() {
-    	Patient p = new Patient(2, 2);
-    	p.setLastName("KARTHI");
-    	p.setFirstName("KARTHIKA");
-    	int res = patient.compareTo(p);
-    	assertEquals(res, res);
-    }
-    @Order(27)
+	}
 	@Test
-	void testToString() {
-		assertNotNull(patient.toString());
+	void com() {
+		Patient p = new Patient(1, 1);
+
+		String name1="sanjay";
+		String name2="benin";
+		assertTrue(name1.equals(name2));
 	}
 
 }

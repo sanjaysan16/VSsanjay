@@ -2,6 +2,7 @@ package edu.disease.asn2;
 
 import static org.junit.Assert.*;
 
+
 import java.util.UUID;
 
 import org.junit.*;
@@ -84,16 +85,5 @@ public class DiseaseTest2 {
     @Test
     public void ddtest() {
     	assertNotNull(Disease.toString());
-    }
-    @Test
-    public void jtest() {
-    	Disease new1=new InfectiousDisease();
-    	Disease new2=new InfectiousDisease();
-    	UUID e2 = null;
-    	UUID e1=new2.getDiseaseId();
-    
-    	assertFalse(e1!=e2);
-    	UUID e3=null;
-    	assertTrue(e3!=e2); 
     }
 }
